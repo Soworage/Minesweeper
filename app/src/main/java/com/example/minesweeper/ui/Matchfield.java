@@ -18,11 +18,18 @@ public class Matchfield extends Canvas {
     private final int fieldWidth = 80;
     private Paint paint;
 
+
+
+    private MinesweeperGame game = new MinesweeperGame(cellCol, cellRow);
+
     public Matchfield(Bitmap bitmap, Paint paint) {
         super(bitmap);
         this.paint = paint;
     }
 
+    public boolean isGameEnd() {
+        return game.isGameEnd();
+    }
     private int getCellColor(Cell cell) {
         if (cell.getState() == CellState.HIDDEN) {
             return Color.GRAY;
@@ -49,12 +56,17 @@ public class Matchfield extends Canvas {
         drawText(text, x, y, paint);
     }
 
-    private MinesweeperGame game = new MinesweeperGame(cellCol, cellRow);
-
     public void Click(int posX, int posY) {
         int x = posX / fieldWidth;
         int y = posY / fieldHeight;
         game.activate(x, y);
+        drawField();
+    }
+
+    public void longClick(int posX, int posY){
+        int x = posX/fieldWidth;
+        int y = posY / fieldHeight;
+        game.flagActivate(x, y);
         drawField();
     }
 
